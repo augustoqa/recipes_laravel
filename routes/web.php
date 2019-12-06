@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/recipe-classes', 'RecipeClassController@index');
+
+Route::get('/recipe-classes/{id}', 'RecipeClassController@show')
+    ->where('id', '[0-9]+');
