@@ -42,4 +42,27 @@ class RecipeClassModuleTest extends TestCase
             ->assertSee("Detail Recipe Class #{$class->id}")
             ->assertSee('Main course');
     }
+
+    /** @test */
+    function it_loads_the_new_recipe_class_page() {
+        $this->withoutExceptionHandling();
+
+        $this->get('/recipe-classes/create')
+            ->assertStatus(200)
+            ->assertSee('Create a new Recipe Class');
+    }
+
+    /** @test */
+    function it_creates_a_new_recipe_class()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->post('/recipe-classes', [
+            'description' => 'Main course'
+        ])->assertRedirect('/recipe-classes');
+
+        $this->assertDatabaseHas('recipe_classes', [
+            'description' => 'Main course',
+        ]);
+    }
 }

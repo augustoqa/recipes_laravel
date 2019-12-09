@@ -19,3 +19,7 @@ Route::get('/recipe-classes', 'RecipeClassController@index');
 
 Route::get('/recipe-classes/{id}', 'RecipeClassController@show')
     ->where('id', '[0-9]+');
+
+Route::get('/recipe-classes/create', 'RecipeClassController@create');
+
+Route::post('/recipe-classes', 'RecipeClassController@store');

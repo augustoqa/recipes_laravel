@@ -19,4 +19,18 @@ class RecipeClassController extends Controller
 
         return view('recipe_classes.show', compact('class')) ;
     }
+
+    public function create()
+    {
+        return view('recipe_classes.create');
+    }
+
+    public function store()
+    {
+        DB::table('recipe_classes')->insert([
+            'description' => request()->get('description')
+        ]);
+
+        return response()->redirectTo('/recipe-classes');
+    }
 }
