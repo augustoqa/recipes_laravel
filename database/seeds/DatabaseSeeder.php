@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('recipe_classes')->truncate();
+
+        $this->call(RecipeClassSeeder::class);
         // $this->call(UsersTableSeeder::class);
     }
 }

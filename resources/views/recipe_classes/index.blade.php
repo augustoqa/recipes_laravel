@@ -7,7 +7,7 @@
 
     <ul>
         @foreach ($classes as $class)
-        <li>{{ $class }}</li>
+        <li>{{ $class->description }}</li>
         @endforeach
     </ul>
 @endsection
