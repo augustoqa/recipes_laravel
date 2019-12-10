@@ -27,3 +27,5 @@ Route::post('/recipe-classes', 'RecipeClassController@store');
 Route::get('/recipe-classes/{id}/edit', 'RecipeClassController@edit');
 
 Route::put('/recipe-classes/{id}/update', 'RecipeClassController@update');
+
+Route::delete('/recipe-classes/{id}/delete', 'RecipeClassController@delete');

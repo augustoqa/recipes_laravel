@@ -98,4 +98,20 @@ class RecipeClassModuleTest extends TestCase
 
         $this->assertEquals('Vegetable', $class->fresh()->description);
     }
+
+    /** @test */
+    function it_delete_a_recipe_class()
+    {
+        $this->withoutExceptionHandling();
+
+        $class = factory(RecipeClass::class)->create();
+
+        $this->delete("/recipe-classes/{$class->id}/delete")
+            ->assertRedirect('/recipe-classes');
+
+        $this->assertDatabaseMissing('recipe_classes', [
+            'id' => $class->id,
+            'description' => $class->description,
+        ]);
+    }
 }

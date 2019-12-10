@@ -51,4 +51,11 @@ class RecipeClassController extends Controller
 
         return response()->redirectTo('/recipe-classes');
     }
+
+    public function delete($id)
+    {
+        DB::table('recipe_classes')->where('id', $id)->delete();
+
+        return response()->redirectTo('/recipe-classes');
+    }
 }
