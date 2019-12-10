@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\RecipeClass;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use function foo\func;
 
 class RecipeClassModuleTest extends TestCase
 {
@@ -64,5 +65,37 @@ class RecipeClassModuleTest extends TestCase
         $this->assertDatabaseHas('recipe_classes', [
             'description' => 'Main course',
         ]);
+    }
+
+    /** @test */
+    function it_loads_update_recipe_class_page()
+    {
+        $this->withoutExceptionHandling();
+
+        $class = factory(RecipeClass::class)->create();
+
+        $this->get("/recipe-classes/{$class->id}/edit")
+            ->assertStatus(200)
+            ->assertViewIs('recipe_classes.edit')
+            ->assertSee("Edit Recipe Class #{$class->id}")
+            ->assertViewHas('class', function ($viewClass) use ($class) {
+                return $viewClass->id === $class->id;
+            });
+    }
+
+    /** @test */
+    function it_updates_a_recipe_class()
+    {
+        $this->withoutExceptionHandling();
+
+        $class = factory(RecipeClass::class)->create([
+            'description' => 'Main course',
+        ]);
+
+        $this->put("/recipe-classes/{$class->id}/update", [
+            'description' => 'Vegetable'
+        ])->assertRedirect('/recipe-classes');
+
+        $this->assertEquals('Vegetable', $class->fresh()->description);
     }
 }

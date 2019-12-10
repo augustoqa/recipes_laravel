@@ -33,4 +33,22 @@ class RecipeClassController extends Controller
 
         return response()->redirectTo('/recipe-classes');
     }
+
+    public function edit($id)
+    {
+        $class = DB::table('recipe_classes')->where('id', $id)->get()[0];
+
+        return view('recipe_classes.edit', compact('class'));
+    }
+
+    public function update($id)
+    {
+        DB::table('recipe_classes')
+            ->where('id', $id)
+            ->update([
+                'description' => request('description')
+            ]);
+
+        return response()->redirectTo('/recipe-classes');
+    }
 }
