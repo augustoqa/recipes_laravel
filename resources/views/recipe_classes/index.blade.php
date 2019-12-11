@@ -5,7 +5,7 @@
 @section('content')
     <h1>Recipe Classes</h1>
 
-
+    <a href="{{ route('recipe-classes.create') }}" class="btn btn-info">Add new Recipe Class</a>
 
     <table class="table table-bordered table-striped">
         <thead>
