@@ -5,9 +5,9 @@
 @section('content')
     <h1>Edit Recipe Class #{{ $class->id }}</h1>
 
-    <form method="PUT" action="/recipe-classes/{{ $class->id }}/update">
+    <form method="POST" action="{{ route('recipe-classes.update', ['id' => $class->id]) }}">
         {{ method_field('PUT') }}
-        {{ csrf_token() }}
+        {{ csrf_field() }}
 
         <div>
             <label for="description">Description</label>

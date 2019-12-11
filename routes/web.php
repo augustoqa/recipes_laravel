@@ -15,17 +15,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/recipe-classes', 'RecipeClassController@index');
+Route::pattern('id', '[0-9]+');
+
+Route::get('/recipe-classes', 'RecipeClassController@index')
+    ->name('recipe-classes');
 
 Route::get('/recipe-classes/{id}', 'RecipeClassController@show')
-    ->where('id', '[0-9]+');
+    ->name('recipe-classes.show');
 
-Route::get('/recipe-classes/create', 'RecipeClassController@create');
+Route::get('/recipe-classes/create', 'RecipeClassController@create')
+    ->name('recipe-classes.create');
 
-Route::post('/recipe-classes', 'RecipeClassController@store');
+Route::post('/recipe-classes', 'RecipeClassController@store')
+    ->name('recipe-classes.store');
 
-Route::get('/recipe-classes/{id}/edit', 'RecipeClassController@edit');
+Route::get('/recipe-classes/{id}/edit', 'RecipeClassController@edit')
+    ->name('recipe-classes.edit');
 
-Route::put('/recipe-classes/{id}/update', 'RecipeClassController@update');
+Route::put('/recipe-classes/{id}/update', 'RecipeClassController@update')
+    ->name('recipe-classes.update');
 
-Route::delete('/recipe-classes/{id}/delete', 'RecipeClassController@delete');
+Route::delete('/recipe-classes/{id}/delete', 'RecipeClassController@delete')
+    ->name('recipe-classes.delete');
