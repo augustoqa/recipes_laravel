@@ -31,6 +31,14 @@ class RecipeClassModuleTest extends TestCase
     }
 
     /** @test */
+    function it_displays_a_404_error_if_the_recipe_class_not_found()
+    {
+        $this->get('/recipe-classes/9999')
+            ->assertStatus(404)
+            ->assertSee('Not Found');
+    }
+
+    /** @test */
     function it_show_recipe_class_details() {
         $this->withoutExceptionHandling();
 
