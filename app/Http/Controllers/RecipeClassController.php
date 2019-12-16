@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\RecipeClass;
 
 class RecipeClassController extends Controller
 {
     public function index()
     {
-        $classes = DB::select('select * from `recipe_classes`');
-
-        return view('recipe_classes.index', compact('classes'));
+        return view('recipe_classes.index')
+            ->with('classes', RecipeClass::all());
     }
 
     public function show($id)
     {
-        $class = DB::select('select * from `recipe_classes` WHERE `id` = ?', [$id])[0];
+        $class = RecipeClass::findOrFail($id);
 
         return view('recipe_classes.show', compact('class')) ;
     }
@@ -27,35 +26,30 @@ class RecipeClassController extends Controller
 
     public function store()
     {
-        DB::table('recipe_classes')->insert([
-            'description' => request()->get('description')
-        ]);
+        RecipeClass::create(request()->all());
 
-        return response()->redirectTo('/recipe-classes');
+        return response()->redirectToRoute('recipe-classes');
     }
 
     public function edit($id)
     {
-        $class = DB::table('recipe_classes')->where('id', $id)->get()[0];
+        $class = RecipeClass::findOrFail($id);
 
         return view('recipe_classes.edit', compact('class'));
     }
 
     public function update($id)
     {
-        DB::table('recipe_classes')
-            ->where('id', $id)
-            ->update([
-                'description' => request('description')
-            ]);
+        RecipeClass::whereId($id)
+            ->update(['description' => request('description')]);
 
-        return response()->redirectTo('/recipe-classes');
+        return response()->redirectToRoute('recipe-classes');
     }
 
     public function delete($id)
     {
-        DB::table('recipe_classes')->where('id', $id)->delete();
+        RecipeClass::whereId($id)->delete();
 
-        return response()->redirectTo('/recipe-classes');
+        return response()->redirectToRoute('recipe-classes');
     }
 }
