@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\RecipeClass;
+use Illuminate\Http\Request;
 
 class RecipeClassController extends Controller
 {
@@ -26,6 +27,10 @@ class RecipeClassController extends Controller
 
     public function store()
     {
+        request()->validate([
+            'description' => 'required',
+        ]);
+
         RecipeClass::create(request()->all());
 
         return response()->redirectToRoute('recipe-classes');

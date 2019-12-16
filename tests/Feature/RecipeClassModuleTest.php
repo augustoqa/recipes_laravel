@@ -122,4 +122,15 @@ class RecipeClassModuleTest extends TestCase
             'description' => $class->description,
         ]);
     }
+
+    /** @test */
+    function validate_description_field_as_required()
+    {
+        $this->from('recipe-classes.create')
+            ->post(route('recipe-classes.store'), ['description' => ''])
+            ->assertRedirect('recipe-classes.create')
+            ->assertSessionHasErrors(['description' => 'The description field is required.']);
+
+        $this->assertEquals(0, RecipeClass::count());
+    }
 }

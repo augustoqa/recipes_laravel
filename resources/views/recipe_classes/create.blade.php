@@ -11,6 +11,11 @@
         <div>
             <label for="description">Description</label>
             <input type="text" name="description" id="description" placeholder="Description">
+            @if($errors->has('description'))
+            <div class="alert alert-danger">
+                {{ $errors->first('description') }}
+            </div>
+            @endif
         </div>
 
         <input type="submit" value="Save">
