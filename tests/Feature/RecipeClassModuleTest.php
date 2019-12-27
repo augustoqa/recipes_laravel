@@ -3,19 +3,16 @@
 namespace Tests\Feature;
 
 use App\RecipeClass;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
-use function foo\func;
 
 class RecipeClassModuleTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     /** @test */
     function list_recipe_classes()
     {
-        $this->withoutExceptionHandling();
-
         factory(RecipeClass::class)->create([
             'description' => 'Main course',
         ]);
@@ -33,6 +30,8 @@ class RecipeClassModuleTest extends TestCase
     /** @test */
     function it_displays_a_404_error_if_the_recipe_class_not_found()
     {
+        $this->withExceptionHandling();
+
         $this->get('/recipe-classes/9999')
             ->assertStatus(404)
             ->assertSee('Not Found');
@@ -40,8 +39,6 @@ class RecipeClassModuleTest extends TestCase
 
     /** @test */
     function it_show_recipe_class_details() {
-        $this->withoutExceptionHandling();
-
         $class = factory(RecipeClass::class)->create([
             'description' => 'Main course',
         ]);
@@ -54,7 +51,6 @@ class RecipeClassModuleTest extends TestCase
 
     /** @test */
     function it_loads_the_new_recipe_class_page() {
-        $this->withoutExceptionHandling();
 
         $this->get('/recipe-classes/create')
             ->assertStatus(200)
@@ -64,8 +60,6 @@ class RecipeClassModuleTest extends TestCase
     /** @test */
     function it_creates_a_new_recipe_class()
     {
-        $this->withoutExceptionHandling();
-
         $this->post('/recipe-classes', [
             'description' => 'Main course'
         ])->assertRedirect('/recipe-classes');
@@ -78,8 +72,6 @@ class RecipeClassModuleTest extends TestCase
     /** @test */
     function it_loads_update_recipe_class_page()
     {
-        $this->withoutExceptionHandling();
-
         $class = factory(RecipeClass::class)->create();
 
         $this->get("/recipe-classes/{$class->id}/edit")
@@ -94,8 +86,6 @@ class RecipeClassModuleTest extends TestCase
     /** @test */
     function it_updates_a_recipe_class()
     {
-        $this->withoutExceptionHandling();
-
         $class = factory(RecipeClass::class)->create([
             'description' => 'Main course',
         ]);
@@ -110,8 +100,6 @@ class RecipeClassModuleTest extends TestCase
     /** @test */
     function it_delete_a_recipe_class()
     {
-        $this->withoutExceptionHandling();
-
         $class = factory(RecipeClass::class)->create();
 
         $this->delete("/recipe-classes/{$class->id}/delete")
@@ -126,6 +114,8 @@ class RecipeClassModuleTest extends TestCase
     /** @test */
     function validate_description_field_as_required()
     {
+        $this->withExceptionHandling();
+
         $this->from('recipe-classes.create')
             ->post(route('recipe-classes.store'), ['description' => ''])
             ->assertRedirect('recipe-classes.create')

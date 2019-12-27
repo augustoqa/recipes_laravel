@@ -39,3 +39,20 @@ Route::prefix('recipe-classes')->group(function () {
     Route::delete('{id}/delete', 'RecipeClassController@delete')
         ->name('recipe-classes.delete');
 });
+
+// recipes routes
+Route::prefix('recipes')->group(function () {
+    Route::get('/', 'RecipeController@index')->name('recipes');
+
+    Route::get('create', 'RecipeController@create')->name('recipes.create');
+
+    Route::get('{recipe}', 'RecipeController@show')->name('recipes.show');
+
+    Route::post('/', 'RecipeController@store')->name('recipes.store');
+
+    Route::get('{recipe}/edit', 'RecipeController@edit')->name('recipes.edit');
+
+    Route::patch('{recipe}', 'RecipeController@update')->name('recipes.update');
+
+    Route::delete('{recipe}', 'RecipeController@delete')->name('recipes.delete');
+});
