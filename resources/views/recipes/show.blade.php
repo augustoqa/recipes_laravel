@@ -3,10 +3,23 @@
 @section('title', 'Recipe detail')
 
 @section('content')
-    <h1>Detail of {{ $recipe->title }}</h1>
+    <div class="card">
+        <h5 class="card-header">
+            {{ $recipe->title }}
+            <a href="{{ route('recipes') }}" class="btn btn-primary float-right">Return to list of Recipes</a>
+        </h5>
+        <div class="card-body">
+            <h6>Peparation</h6>
+            <p>{{ $recipe->preparation }}</p>
 
-    <h4>Preparation</h4>
-    <p>{{ $recipe->preparation }}</p>
-    {{ $recipe->type->description }}
+            <hr>
 
+            <h6>Notes</h6>
+            <p>{{ $recipe->notes }}</p>
+
+            <hr>
+
+            <p class="card-text text-right"><small class="text-muted">{{ $recipe->type->description }}</small></p>
+        </div>
+    </div>
 @endsection
