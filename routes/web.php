@@ -52,7 +52,7 @@ Route::prefix('recipes')->group(function () {
 
     Route::get('{recipe}/edit', 'RecipeController@edit')->name('recipes.edit');
 
-    Route::patch('{recipe}', 'RecipeController@update')->name('recipes.update');
+    Route::patch('{recipe}/update', 'RecipeController@update')->name('recipes.update');
 
-    Route::delete('{recipe}', 'RecipeController@delete')->name('recipes.delete');
+    Route::delete('{recipe}/delete', 'RecipeController@delete')->name('recipes.delete');
 });

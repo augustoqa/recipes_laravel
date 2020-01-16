@@ -21,8 +21,11 @@
 				<a href="{{ route('recipes.show', ['recipe' => $recipe]) }}" class="btn btn-outline-primary">
 					Details
 				</a>
+                <a href="{{ route('recipes.edit', ['recipe' => $recipe]) }}" class="btn btn-outline-secondary">
+                    Edit
+                </a>
 			</div>
-		</div>	
+		</div>
 	</div>
 	@endforeach
 	</div>
