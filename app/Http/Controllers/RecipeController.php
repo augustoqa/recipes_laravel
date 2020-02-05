@@ -21,6 +21,12 @@ class RecipeController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'recipe_class_id' => 'required|exists:recipe_classes,id',
+            'preparation' => 'required'
+        ]);
+
         Recipe::create($request->all());
 
         return response()->redirectToRoute('recipes');

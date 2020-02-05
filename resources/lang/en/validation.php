@@ -146,6 +146,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'recipe_class_id' => 'Recipe Type'
+    ],
 
 ];

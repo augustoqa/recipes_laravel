@@ -144,4 +144,68 @@ class RecipeModuleTest extends TestCase
             'title' => $recipe->title
         ]);
     }
+
+    /** @test */
+    function validate_the_title_is_required()
+    {
+        $this->withExceptionHandling();
+
+        $this->from('recipes.create')
+            ->post(route('recipes.store', [
+                'title' => ''
+            ]))
+            ->assertRedirect('recipes.create')
+            ->assertSessionHasErrors(['title' => 'The title field is required.']);
+
+        $this->assertEquals(0, Recipe::count());
+    }
+
+    /** @test */
+    function validate_the_type_of_recipe_is_required()
+    {
+        $this->withExceptionHandling();
+
+        $this->from('recipes.create')
+            ->post(route('recipes.store', [
+                'title' => 'Some title',
+                'recipe_class_id' => ''
+            ]))
+            ->assertRedirect('recipes.create')
+            ->assertSessionHasErrors(['recipe_class_id' => 'The Recipe Type field is required.']);
+
+        $this->assertEquals(0, Recipe::count());
+    }
+
+    /** @test */
+    function validate_the_type_of_recipe_is_a_valid_value()
+    {
+        $this->withExceptionHandling();
+
+        $this->from('recipes.create')
+            ->post(route('recipes.store', [
+                'title' => 'Some title',
+                'recipe_class_id' => 'invalid_value'
+            ]))
+            ->assertRedirect('recipes.create')
+            ->assertSessionHasErrors(['recipe_class_id' => 'The selected Recipe Type is invalid.']);
+
+        $this->assertEquals(0, Recipe::count());
+    }
+
+    /** @test */
+    function validate_the_preparation_is_required()
+    {
+        $this->withExceptionHandling();
+
+        $this->from('recipes.create')
+            ->post(route('recipes.store', [
+                'title' => 'Some title',
+                'recipe_class_id' => factory(RecipeClass::class)->create()->id,
+                'preparation' => ''
+            ]))
+            ->assertRedirect('recipes.create')
+            ->assertSessionHasErrors(['preparation' => 'The preparation field is required.']);
+
+        $this->assertEquals(0, Recipe::count());
+    }
 }
